@@ -1,0 +1,9 @@
+Package: com.hiapk.controlx
+Name: ControlX
+Version: 0.4.0
+Architecture: iphoneos-arm64e
+Description: 当 · 如果 · 就 —— 打开 App 时，按 Wi-Fi、充电、时间等条件自动控制音量、亮度、蓝牙、低电量等系统设置，离开时自动恢复。开源（MIT）。
+Maintainer: hiapk
+Author: hiapk
+Section: Tweaks
+Depends: mobilesubstrate, preferenceloader, firmware (>= 15.0)

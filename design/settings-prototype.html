@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ControlX · 设置页面设计稿</title>
+<style>
+  :root {
+    --ivory: #FAF9F5; --slate: #141413; --clay: #D97757; --oat: #E3DACC; --olive: #788C5D;
+    --gray-50: #F0EEE6; --gray-200: #D1CFC5; --gray-500: #87867F; --gray-800: #3D3D3A; --white: #fff;
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+    /* iOS 深色设置 */
+    --ios-bg: #000; --ios-cell: #1C1C1E; --ios-sep: #38383A; --ios-text: #fff;
+    --ios-sub: #8E8E93; --ios-blue: #0A84FF; --ios-red: #FF453A; --ios-green: #30D158;
+    --ios-fill: #2C2C2E; --ios-orange: #FF9F0A; --ios-purple: #BF5AF2; --ios-teal: #64D2FF;
+    --ios-yellow: #FFD60A; --ios-indigo: #5E5CE6; --ios-pink: #FF375F;
+  }
+  .light-phone {
+    --ios-bg: #F2F2F7; --ios-cell: #fff; --ios-sep: #C6C6C8; --ios-text: #000;
+    --ios-sub: #8A8A8E; --ios-fill: #E5E5EA; --ios-blue: #007AFF; --ios-red: #FF3B30; --ios-green: #34C759;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ivory); color: var(--slate); font-family: var(--sans); font-size: 14px; line-height: 1.55; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 48px 32px 64px; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-500); }
+  h1 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; font-size: 34px; margin: 6px 0 8px; }
+  .lede { color: var(--gray-800); max-width: 760px; margin: 0; }
+  .model { display: flex; gap: 10px; align-items: center; margin: 20px 0 28px; flex-wrap: wrap; }
+  .model .pill { border: 1.5px solid var(--gray-200); background: var(--white); border-radius: 999px; padding: 6px 14px; font-weight: 600; }
+  .model .pill b { font-family: var(--mono); font-size: 11px; color: var(--clay); margin-right: 6px; letter-spacing: .06em; }
+  .model .arrow { color: var(--gray-500); }
+
+  .stage { display: grid; grid-template-columns: 300px 400px 1fr; gap: 28px; align-items: start; }
+  .card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 12px; padding: 18px 20px; }
+  .card h3 { font-family: var(--serif); font-weight: 500; font-size: 18px; margin: 4px 0 10px; }
+
+  /* 页面地图 */
+  .map button { display: flex; width: 100%; align-items: center; gap: 10px; text-align: left; border: 1.5px solid transparent;
+    background: none; padding: 8px 10px; border-radius: 8px; font: inherit; cursor: pointer; color: var(--slate); }
+  .map button:hover { background: var(--gray-50); }
+  .map button.on { border-color: var(--clay); background: #FBEFEA; }
+  .map .n { font-family: var(--mono); font-size: 11px; color: var(--gray-500); width: 22px; }
+  .map .sub { display: block; font-size: 12px; color: var(--gray-500); }
+  .ctrls { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { border: 1.5px solid var(--gray-200); background: var(--white); border-radius: 8px; padding: 6px 12px; font: inherit; cursor: pointer; }
+  .btn:hover { border-color: var(--slate); }
+  .btn.primary { background: var(--slate); color: var(--ivory); border-color: var(--slate); }
+
+  /* 手机 */
+  .phone { width: 400px; height: 820px; border-radius: 54px; background: #111; padding: 14px; box-shadow: 0 20px 50px rgba(20,20,19,.18), inset 0 0 0 2px #333; position: sticky; top: 24px; }
+  .screen { width: 100%; height: 100%; border-radius: 42px; background: var(--ios-bg); color: var(--ios-text); overflow: hidden; position: relative;
+    font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; font-size: 16px; line-height: 1.3; }
+  .status { height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 0; font-weight: 600; font-size: 15px; }
+  .island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 112px; height: 32px; background: #000; border-radius: 20px; z-index: 5; }
+  .nav { height: 44px; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 12px; }
+  .nav .title { font-weight: 600; font-size: 17px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nav .back { position: absolute; left: 8px; color: var(--ios-blue); background: none; border: 0; font: inherit; font-size: 17px; cursor: pointer; display: flex; align-items: center; gap: 2px; }
+  .nav .right { position: absolute; right: 16px; color: var(--ios-blue); background: none; border: 0; font: inherit; font-size: 17px; cursor: pointer; }
+  .body { height: calc(100% - 94px); overflow-y: auto; padding: 0 16px 40px; scrollbar-width: none; }
+  .body::-webkit-scrollbar { display: none; }
+
+  .hero { text-align: center; padding: 10px 0 4px; }
+  .hero .icon { width: 72px; height: 72px; border-radius: 17px; margin: 0 auto 8px; display: grid; place-items: center; }
+  .hero .name { font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
+  .hero .tag { color: var(--ios-sub); font-size: 13px; }
+
+  .ghead { color: var(--ios-sub); font-size: 13px; text-transform: none; margin: 22px 16px 6px; display: flex; justify-content: space-between; }
+  .gfoot { color: var(--ios-sub); font-size: 13px; margin: 6px 16px 0; line-height: 1.35; }
+  .group { background: var(--ios-cell); border-radius: 10px; overflow: hidden; }
+  .row { display: flex; align-items: center; min-height: 44px; padding: 0 16px; gap: 12px; position: relative; cursor: default; }
+  .row + .row::before { content: ""; position: absolute; top: 0; right: 0; left: var(--inset, 16px); border-top: .5px solid var(--ios-sep); }
+  .row.tap { cursor: pointer; } .row.tap:active { background: var(--ios-fill); }
+  .row .ic { width: 29px; height: 29px; border-radius: 7px; display: grid; place-items: center; flex: none; color: #fff; font-size: 15px; }
+  .row.hasic { --inset: 57px; }
+  .row .lbl { flex: 1; min-width: 0; padding: 11px 0; }
+  .row .lbl small { display: block; color: var(--ios-sub); font-size: 13px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .val { color: var(--ios-sub); white-space: nowrap; }
+  .row .chev { color: #5A5A5F; font-size: 20px; margin-left: -4px; }
+  .row.link .lbl { color: var(--ios-blue); }
+  .row.danger .lbl { color: var(--ios-red); text-align: center; }
+  .row.center .lbl { text-align: center; }
+  .row input.txt { background: none; border: 0; color: var(--ios-text); font: inherit; text-align: right; flex: 1; outline: none; min-width: 0; }
+  .row input.txt::placeholder { color: #5A5A5F; }
+  .check { color: var(--ios-blue); font-weight: 700; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ios-green); flex: none; }
+  .dot.off { background: #5A5A5F; }
+  .restore { font-size: 11px; color: var(--ios-teal); border: 1px solid currentColor; border-radius: 5px; padding: 0 4px; margin-left: 6px; }
+
+  .sw { width: 51px; height: 31px; border-radius: 16px; background: #39393D; position: relative; flex: none; cursor: pointer; transition: background .2s; border: 0; }
+  .light-phone .sw { background: #E9E9EA; }
+  .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+  .sw.on { background: var(--ios-green); } .sw.on::after { transform: translateX(20px); }
+
+  .seg { display: flex; background: var(--ios-fill); border-radius: 9px; padding: 2px; flex: 1; margin: 8px 0; }
+  .seg button { flex: 1; border: 0; background: none; color: var(--ios-text); font: inherit; font-size: 13px; font-weight: 500; padding: 6px 4px; border-radius: 7px; cursor: pointer; }
+  .seg button.on { background: #636366; }
+  .light-phone .seg button.on { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+
+  .slider { display: flex; align-items: center; gap: 12px; flex: 1; padding: 10px 0; }
+  .slider input { flex: 1; accent-color: var(--ios-blue); }
+  .slider .big { font-variant-numeric: tabular-nums; width: 44px; text-align: right; }
+
+  .chips { display: flex; gap: 6px; align-items: center; }
+  .appic { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; flex: none; }
+  .row .appic.lg { width: 29px; height: 29px; border-radius: 7px; }
+
+  .search { background: var(--ios-fill); border-radius: 10px; display: flex; align-items: center; gap: 6px; padding: 8px 10px; color: var(--ios-sub); margin-top: 8px; }
+  .search input { background: none; border: 0; color: var(--ios-text); font: inherit; outline: none; flex: 1; }
+
+  .log { font-family: var(--mono); font-size: 11.5px; line-height: 1.5; padding: 12px 14px; white-space: pre-wrap; color: #D1D1D6; }
+  .light-phone .log { color: #333; }
+  .log .ok { color: var(--ios-green); } .log .skip { color: var(--ios-orange); } .log .act { color: var(--ios-teal); }
+
+  /* 底部弹出菜单 */
+  .sheet-bg { position: absolute; inset: 0; background: rgba(0,0,0,.45); display: none; z-index: 10; }
+  .sheet { position: absolute; left: 8px; right: 8px; bottom: 30px; z-index: 11; display: none; }
+  .sheet .grp { background: rgba(44,44,46,.96); border-radius: 14px; overflow: hidden; margin-top: 8px; }
+  .light-phone .sheet .grp { background: rgba(255,255,255,.96); }
+  .sheet .t { color: var(--ios-sub); font-size: 13px; text-align: center; padding: 12px; border-bottom: .5px solid var(--ios-sep); }
+  .sheet button { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; background: none; border: 0; color: var(--ios-blue);
+    font: inherit; font-size: 19px; padding: 15px; border-bottom: .5px solid var(--ios-sep); cursor: pointer; }
+  .sheet button:last-child { border-bottom: 0; }
+  .sheet button[disabled] { color: #5A5A5F; cursor: default; }
+  .sheet .cancel { font-weight: 600; }
+  .open .sheet-bg, .open .sheet { display: block; }
+
+  .toast { position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); background: rgba(60,60,67,.95); color: #fff; padding: 10px 16px; border-radius: 12px;
+    font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 20; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+
+  /* 右侧说明 */
+  .notes h3 { margin-top: 2px; }
+  .notes ul { padding-left: 18px; margin: 6px 0 0; }
+  .notes li { margin: 5px 0; }
+  .notes .q { margin-top: 14px; border-top: 1.5px dashed var(--gray-200); padding-top: 12px; }
+  .notes .q .eyebrow { color: var(--clay); }
+  .export { margin-top: 20px; }
+  .export pre { background: var(--gray-50); border: 1.5px solid var(--gray-200); border-radius: 10px; padding: 12px; font-family: var(--mono); font-size: 11.5px;
+    max-height: 340px; overflow: auto; margin: 10px 0 0; white-space: pre; }
+  @media (max-width: 1180px) { .stage { grid-template-columns: 1fr; } .phone { position: static; margin: 0 auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">ControlX / design / settings prototype · v0.1</div>
+    <h1>ControlX 设置页面设计稿</h1>
+    <p class="lede">可点击的交互原型：左边跳转页面，中间直接在「手机」里点、改、开关，右边是每页的设计要点和待定问题。所有改动都会实时反映到最下面的规则数据里，可以导出给开发用。</p>
+    <div class="model">
+      <span class="pill"><b>WHEN</b>当 · 打开某些 App</span><span class="arrow">→</span>
+      <span class="pill"><b>IF</b>如果 · 环境满足条件</span><span class="arrow">→</span>
+      <span class="pill"><b>THEN</b>就 · 让系统执行动作</span><span class="arrow">↩︎</span>
+      <span class="pill" style="font-weight:500">离开 App 时恢复</span>
+    </div>
+  </header>
+
+  <div class="stage">
+    <aside>
+      <div class="card map">
+        <div class="eyebrow">页面地图</div>
+        <div id="map"></div>
+        <div class="ctrls">
+          <button class="btn" id="themeBtn">切换浅色手机</button>
+          <button class="btn" id="resetBtn">重置示例数据</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="phone"><div class="screen" id="screen">
+      <div class="island"></div>
+      <div class="status"><span>9:41</span><span>􀙇 􀛨</span></div>
+      <div class="nav" id="nav"></div>
+      <div class="body" id="body"></div>
+      <div class="sheet-bg" id="sheetBg"></div>
+      <div class="sheet" id="sheet"></div>
+      <div class="toast" id="toast"></div>
+    </div></div>
+
+    <div>
+      <div class="card notes" id="notes"></div>
+      <div class="card export">
+        <div class="eyebrow">规则数据 · 插件实际保存的结构</div>
+        <div class="ctrls" style="margin-top:8px">
+          <button class="btn primary" id="copyBtn">复制 JSON</button>
+          <span style="color:var(--gray-500);align-self:center;font-size:12.5px">在原型里改了什么，这里同步变化</span>
+        </div>
+        <pre id="json"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- 示例数据 ---------- */
+const APPS = [
+  { id: "ph.telegra.Telegraph", name: "Telegram", c: "#2AABEE", t: "T" },
+  { id: "com.zhiliaoapp.musically", name: "TikTok", c: "#111", t: "♪" },
+  { id: "org.coolstar.SileoStore", name: "Sileo", c: "#3D7BF7", t: "S" },
+  { id: "com.dragon.read", name: "番茄小说", c: "#F2552C", t: "番" },
+  { id: "com.giffgaff.mygiffgaff", name: "giffgaff", c: "#000", t: "g" },
+  { id: "com.tencent.xin", name: "微信", c: "#07C160", t: "微" },
+  { id: "com.google.ios.youtube", name: "YouTube", c: "#FF0000", t: "▶" },
+  { id: "com.apple.mobilesafari", name: "Safari", c: "#1E90FF", t: "◎", sys: true },
+  { id: "com.apple.MobileSMS", name: "信息", c: "#34C759", t: "✉", sys: true },
+  { id: "com.apple.camera", name: "相机", c: "#555", t: "◉", sys: true },
+];
+const COND = {
+  wifi:     { name: "Wi-Fi",  ic: "📶", c: "var(--ios-blue)" },
+  charging: { name: "充电",   ic: "⚡", c: "var(--ios-green)" },
+  time:     { name: "时间段", ic: "🕘", c: "var(--ios-indigo)" },
+};
+const ACT = {
+  volume:     { name: "音量",     ic: "🔊", c: "var(--ios-pink)",   kind: "level" },
+  brightness: { name: "亮度",     ic: "☀︎", c: "var(--ios-blue)",   kind: "level" },
+  wifi:       { name: "Wi-Fi",    ic: "📶", c: "var(--ios-blue)",   kind: "bool" },
+  bluetooth:  { name: "蓝牙",     ic: "ᛒ",  c: "var(--ios-blue)",   kind: "bool" },
+  lowPower:   { name: "低电量模式", ic: "🔋", c: "var(--ios-yellow)", kind: "bool" },
+  darkMode:   { name: "深色模式", ic: "◐",  c: "#636366",           kind: "bool" },
+  rotationLock:{ name: "方向锁定", ic: "🔒", c: "var(--ios-red)",    kind: "bool" },
+  mute:       { name: "静音",     ic: "🔕", c: "var(--ios-red)",    kind: "bool" },
+};
+const fresh = () => ({
+  enabled: true,
+  rules: [
+    { id: "r1", name: "Telegram 夜间模式", enabled: true, apps: ["ph.telegra.Telegraph"], match: "all", reevaluate: false,
+      conditions: [{ type: "wifi", op: "isNot", ssid: "Home-5G" }, { type: "time", start: "22:00", end: "07:00", days: "everyday" }],
+      actions: [{ type: "brightness", value: 30, restore: true }, { type: "volume", value: 0, restore: true }] },
+    { id: "r2", name: "刷视频降音量", enabled: true, apps: ["com.zhiliaoapp.musically"], match: "all", reevaluate: false,
+      conditions: [], actions: [{ type: "volume", value: 6, restore: true }] },
+    { id: "r3", name: "看小说省电", enabled: true, apps: ["com.dragon.read"], match: "all", reevaluate: true,
+      conditions: [{ type: "charging", is: false }],
+      actions: [{ type: "lowPower", value: true, restore: true }, { type: "mute", value: true, restore: true }, { type: "volume", value: 13, restore: true }] },
+    { id: "r4", name: "外出关蓝牙", enabled: false, apps: ["org.coolstar.SileoStore", "com.giffgaff.mygiffgaff"], match: "any", reevaluate: false,
+      conditions: [{ type: "wifi", op: "is", ssid: "Office" }], actions: [{ type: "bluetooth", value: false, restore: false }] },
+  ],
+});
+let S = fresh();
+let stack = [{ s: "root" }];
+let light = false;
+
+/* ---------- 工具 ---------- */
+const $ = (id) => document.getElementById(id);
+const app = (id) => APPS.find((a) => a.id === id) || { name: id, c: "#555", t: "?" };
+const rule = (id) => S.rules.find((r) => r.id === id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const appIc = (a, lg) => `<span class="appic${lg ? " lg" : ""}" style="background:${a.c}">${a.t}</span>`;
+const ic = (c, glyph) => `<span class="ic" style="background:${c}">${glyph}</span>`;
+const sw = (on, act) => `<button class="sw${on ? " on" : ""}" data-act="${act}"></button>`;
+const seg = (opts, cur, act) => `<div class="seg">${opts.map(([v, l]) => `<button class="${v === cur ? "on" : ""}" data-act="${act}" data-v="${v}">${l}</button>`).join("")}</div>`;
+const condText = (c) => c.type === "wifi" ? `Wi-Fi ${c.op === "is" ? "是" : "不是"}「${c.ssid || "未填写"}」`
+  : c.type === "charging" ? (c.is ? "正在充电" : "没有在充电")
+  : `${c.start}–${c.end} · ${{ everyday: "每天", weekdays: "工作日", weekend: "周末" }[c.days]}`;
+const actText = (a) => ACT[a.type].kind === "level" ? `${a.value}%` : (a.value ? "打开" : "关闭");
+const appsSummary = (r) => !r.apps.length ? "未选择" : r.apps.length === 1 ? app(r.apps[0]).name : `${app(r.apps[0]).name} 等 ${r.apps.length} 个`;
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 1500); }
+function go(s, extra = {}) { stack.push({ s, ...extra }); render(); }
+function back() { if (stack.length > 1) stack.pop(); render(); }
+function jump(s) { // 页面地图直接跳转：补齐上级页面
+  const r = S.rules[0];
+  const paths = { root: [{ s: "root" }], rule: [{ s: "root" }, { s: "rule", rid: r.id }],
+    apps: [{ s: "root" }, { s: "rule", rid: r.id }, { s: "apps", rid: r.id }],
+    cond: [{ s: "root" }, { s: "rule", rid: r.id }, { s: "cond", rid: r.id, i: 0 }],
+    act: [{ s: "root" }, { s: "rule", rid: r.id }, { s: "act", rid: r.id, i: 0 }],
+    log: [{ s: "root" }, { s: "log" }], test: [{ s: "root" }, { s: "test" }] };
+  stack = JSON.parse(JSON.stringify(paths[s])); closeSheet(); render();
+}
+
+/* ---------- 各页面 ---------- */
+const SCREENS = {
+  root: {
+    title: "ControlX", map: ["1", "首页 · 规则列表", "总开关、所有规则、调试入口"],
+    nav: () => ({ title: "", back: "设置" }),
+    body: () => `
+      <div class="hero"><div class="icon" style="background:linear-gradient(160deg,#5E5CE6,#0A84FF)">${logo(40)}</div>
+        <div class="name">ControlX</div><div class="tag">当 · 如果 · 就 —— 按 App 自动控制系统</div></div>
+      <div class="ghead"></div>
+      <div class="group">
+        <div class="row"><div class="lbl">启用 ControlX</div>${sw(S.enabled, "toggleAll")}</div>
+        <div class="row"><div class="lbl">最近执行<small>Telegram 夜间模式 · 2 分钟前 · 执行 2 个动作</small></div></div>
+      </div>
+      <div class="ghead"><span>规则</span><span>${S.rules.filter((r) => r.enabled).length}/${S.rules.length} 已启用</span></div>
+      <div class="group">
+        ${S.rules.map((r) => `<div class="row tap hasic" data-act="openRule" data-v="${r.id}" style="--inset:57px">
+          <span class="chips" style="width:29px">${appIc(app(r.apps[0] || ""), true)}</span>
+          <div class="lbl">${esc(r.name)}<small>${appsSummary(r)} · ${r.conditions.length ? r.conditions.length + " 个条件" : "无条件"} · ${r.actions.length} 个动作</small></div>
+          <span class="dot${r.enabled ? "" : " off"}"></span><span class="chev">›</span></div>`).join("")}
+        <div class="row tap link" data-act="newRule"><div class="lbl">＋ 新建规则</div></div>
+      </div>
+      <div class="gfoot">同一个 App 命中多条规则时，按列表顺序执行，后面的覆盖前面的。点右上角「编辑」可拖动排序。</div>
+      <div class="ghead">调试</div>
+      <div class="group">
+        <div class="row tap hasic" data-act="go" data-v="log">${ic("#636366", "≣")}<div class="lbl">运行日志</div><span class="val">36 条</span><span class="chev">›</span></div>
+        <div class="row tap hasic" data-act="go" data-v="test">${ic("var(--ios-green)", "✓")}<div class="lbl">动作自检</div><span class="val">8/8 可用</span><span class="chev">›</span></div>
+      </div>
+      <div class="gfoot">ControlX 1.0 · MIT 开源 · github.com/…/ControlX</div>`,
+  },
+  rule: {
+    title: "编辑规则", map: ["2", "编辑规则", "当 / 如果 / 就 三段式"],
+    nav: (st) => ({ title: rule(st.rid).name, back: "ControlX" }),
+    body: (st) => { const r = rule(st.rid); return `
+      <div class="ghead"></div>
+      <div class="group">
+        <div class="row"><div class="lbl" style="flex:none">名称</div><input class="txt" data-act="ruleName" value="${esc(r.name)}"></div>
+        <div class="row"><div class="lbl">启用这条规则</div>${sw(r.enabled, "ruleEnabled")}</div>
+      </div>
+
+      <div class="ghead"><span><b style="color:var(--ios-text)">当</b> · 打开这些 App 时</span></div>
+      <div class="group">
+        <div class="row tap" data-act="go" data-v="apps"><div class="lbl">选择 App<small>${appsSummary(r)}</small></div>
+          <span class="chips">${r.apps.slice(0, 4).map((id) => appIc(app(id))).join("")}</span><span class="chev">›</span></div>
+      </div>
+
+      <div class="ghead"><span><b style="color:var(--ios-text)">如果</b> · ${r.conditions.length ? "满足以下条件" : "没有条件，总是执行"}</span></div>
+      <div class="group">
+        ${r.conditions.length > 1 ? `<div class="row">${seg([["all", "全部满足"], ["any", "任一满足"]], r.match, "match")}</div>` : ""}
+        ${r.conditions.map((c, i) => `<div class="row tap hasic" data-act="openCond" data-v="${i}">${ic(COND[c.type].c, COND[c.type].ic)}
+          <div class="lbl">${COND[c.type].name}<small>${esc(condText(c))}</small></div><span class="chev">›</span></div>`).join("")}
+        <div class="row tap link" data-act="addCond"><div class="lbl">＋ 添加条件</div></div>
+      </div>
+
+      <div class="ghead"><span><b style="color:var(--ios-text)">就</b> · 执行这些动作</span></div>
+      <div class="group">
+        ${r.actions.map((a, i) => `<div class="row tap hasic" data-act="openAct" data-v="${i}">${ic(ACT[a.type].c, ACT[a.type].ic)}
+          <div class="lbl">${ACT[a.type].name}</div><span class="val">${actText(a)}${a.restore ? '<span class="restore">↩︎ 恢复</span>' : ""}</span><span class="chev">›</span></div>`).join("")}
+        <div class="row tap link" data-act="addAct"><div class="lbl">＋ 添加动作</div></div>
+      </div>
+      <div class="gfoot">带「↩︎ 恢复」的动作，离开 App 时会还原成打开前的状态。没执行的动作不会被恢复。</div>
+
+      <div class="ghead">高级</div>
+      <div class="group">
+        <div class="row"><div class="lbl">条件变化时重新判断</div>${sw(r.reevaluate, "reeval")}</div>
+      </div>
+      <div class="gfoot">打开：App 还开着时如果条件变了（比如连上了家里的 Wi-Fi），立即执行或撤销动作。关闭：只在打开 App 的那一刻判断一次。</div>
+
+      <div class="ghead"></div>
+      <div class="group"><div class="row tap center" data-act="testRule"><div class="lbl" style="color:var(--ios-blue)">立即试一下（模拟打开 App）</div></div></div>
+      <div class="ghead"></div>
+      <div class="group"><div class="row tap danger" data-act="delRule"><div class="lbl">删除规则</div></div></div>`; },
+  },
+  apps: {
+    title: "选择 App", map: ["3", "选择 App", "多选；搜索；已选置顶"],
+    nav: () => ({ title: "选择 App", back: "返回" }),
+    body: (st) => { const r = rule(st.rid); const q = (st.q || "").toLowerCase();
+      const list = (arr) => arr.filter((a) => !q || a.name.toLowerCase().includes(q)).map((a) => `<div class="row tap hasic" data-act="pickApp" data-v="${a.id}">
+        ${appIc(a, true)}<div class="lbl">${a.name}<small>${a.id}</small></div>${r.apps.includes(a.id) ? '<span class="check">✓</span>' : ""}</div>`).join("") || `<div class="row"><div class="lbl" style="color:var(--ios-sub)">无匹配</div></div>`;
+      const sel = APPS.filter((a) => r.apps.includes(a.id));
+      return `
+      <div class="search">🔍 <input placeholder="搜索 App" data-act="search" value="${esc(st.q || "")}"></div>
+      ${sel.length ? `<div class="ghead">已选择 ${sel.length} 个</div><div class="group">${list(sel)}</div>` : ""}
+      <div class="ghead">用户 App</div><div class="group">${list(APPS.filter((a) => !a.sys && !r.apps.includes(a.id)))}</div>
+      <div class="ghead">系统 App</div><div class="group">${list(APPS.filter((a) => a.sys && !r.apps.includes(a.id)))}</div>`; },
+  },
+  cond: {
+    title: "编辑条件", map: ["4", "编辑条件", "Wi-Fi / 充电 / 时间段"],
+    nav: (st) => ({ title: COND[rule(st.rid).conditions[st.i].type].name, back: "返回" }),
+    body: (st) => { const c = rule(st.rid).conditions[st.i]; let inner = "";
+      if (c.type === "wifi") inner = `
+        <div class="ghead"></div><div class="group">
+          <div class="row">${seg([["is", "连接的是"], ["isNot", "连接的不是"]], c.op, "condOp")}</div>
+          <div class="row"><div class="lbl" style="flex:none">Wi-Fi 名称</div><input class="txt" data-act="ssid" placeholder="例如 Home-5G" value="${esc(c.ssid)}"></div>
+        </div>
+        <div class="ghead"></div><div class="group">
+          <div class="row"><div class="lbl">当前连接</div><span class="val">Home-5G</span></div>
+          <div class="row tap link" data-act="fillSsid"><div class="lbl">填入当前连接的 Wi-Fi</div></div>
+        </div>
+        <div class="gfoot">没连 Wi-Fi 时，「连接的是」不满足，「连接的不是」满足。名称区分大小写。</div>`;
+      if (c.type === "charging") inner = `
+        <div class="ghead"></div><div class="group"><div class="row">${seg([["1", "正在充电"], ["0", "没有在充电"]], c.is ? "1" : "0", "charge")}</div></div>
+        <div class="gfoot">有线和无线充电都算。</div>`;
+      if (c.type === "time") { const times = []; for (let m = 0; m < 1440; m += 15) times.push(`${String(m / 60 | 0).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`);
+        const pick = (k) => `<select data-act="time" data-v="${k}" style="background:none;border:0;color:var(--ios-sub);font:inherit;text-align:right">${times.map((t) => `<option ${t === c[k] ? "selected" : ""}>${t}</option>`).join("")}</select>`;
+        inner = `<div class="ghead"></div><div class="group">
+          <div class="row"><div class="lbl">开始</div>${pick("start")}</div>
+          <div class="row"><div class="lbl">结束</div>${pick("end")}</div>
+          <div class="row">${seg([["everyday", "每天"], ["weekdays", "工作日"], ["weekend", "周末"]], c.days, "days")}</div></div>
+          <div class="gfoot">结束早于开始表示跨夜（如 22:00 到次日 07:00），跨夜时段按开始那天算星期。</div>`; }
+      return inner + `<div class="ghead"></div><div class="group"><div class="row tap danger" data-act="delCond"><div class="lbl">删除条件</div></div></div>`; },
+  },
+  act: {
+    title: "编辑动作", map: ["5", "编辑动作", "数值 / 开关 + 离开时恢复"],
+    nav: (st) => ({ title: ACT[rule(st.rid).actions[st.i].type].name, back: "返回" }),
+    body: (st) => { const a = rule(st.rid).actions[st.i]; const k = ACT[a.type].kind;
+      return `<div class="ghead">打开 App 时</div><div class="group">
+        ${k === "level" ? `<div class="row"><div class="slider"><span>${a.type === "volume" ? "🔈" : "☼"}</span><input type="range" min="0" max="100" value="${a.value}" data-act="level"><span class="big">${a.value}%</span></div></div>`
+          : `<div class="row">${seg([["1", "打开"], ["0", "关闭"]], a.value ? "1" : "0", "boolVal")}</div>`}
+      </div>
+      <div class="ghead">离开 App 时</div><div class="group">
+        <div class="row"><div class="lbl">恢复原来的状态</div>${sw(a.restore, "restore")}</div></div>
+      <div class="gfoot">${a.restore ? "离开时会还原成打开 App 之前的值。" : "离开后保持这个设置，不还原。"}</div>
+      <div class="ghead"></div><div class="group"><div class="row tap center" data-act="preview"><div class="lbl" style="color:var(--ios-blue)">立即试一下</div></div></div>
+      <div class="ghead"></div><div class="group"><div class="row tap danger" data-act="delAct"><div class="lbl">删除动作</div></div></div>`; },
+  },
+  log: {
+    title: "运行日志", map: ["6", "运行日志", "每次触发的判断过程"],
+    nav: () => ({ title: "运行日志", back: "ControlX", right: "复制" }),
+    body: () => `<div class="ghead">最近 80 条 · 最新在上</div><div class="group"><div class="log">
+<span class="act">21:34:08</span> 打开 Telegram
+  规则「Telegram 夜间模式」
+    <span class="ok">✓</span> Wi-Fi 不是 Home-5G（当前：CMCC-5G）
+    <span class="ok">✓</span> 时间 22:00–07:00（当前 21:34）<span class="skip">✗</span>
+  <span class="skip">→ 条件未全部满足，跳过</span>
+<span class="act">21:30:51</span> 离开 番茄小说
+  <span class="ok">↩︎</span> 恢复 低电量模式 → 关闭
+  <span class="ok">↩︎</span> 恢复 音量 → 45%
+<span class="act">21:12:03</span> 打开 番茄小说
+  规则「看小说省电」
+    <span class="ok">✓</span> 没有在充电
+  <span class="ok">→ 执行</span> 低电量模式 打开 · 静音 打开 · 音量 13%
+<span class="act">21:05:44</span> 网络变化：Home-5G → CMCC-5G
+<span class="act">20:58:10</span> 打开 TikTok
+  规则「刷视频降音量」（无条件）
+  <span class="ok">→ 执行</span> 音量 6%
+</div></div>
+      <div class="ghead"></div><div class="group"><div class="row tap danger" data-act="clearLog"><div class="lbl">清空日志</div></div></div>`,
+  },
+  test: {
+    title: "动作自检", map: ["7", "动作自检", "检查每个动作在本机是否可用"],
+    nav: () => ({ title: "动作自检", back: "ControlX" }),
+    body: () => `<div class="ghead">iOS 16.5 · roothide · 检测于 21:40</div><div class="group">
+      ${Object.entries(ACT).map(([k, a]) => `<div class="row hasic">${ic(a.c, a.ic)}<div class="lbl">${a.name}<small>${{ volume: "当前 45%", brightness: "当前 62%", wifi: "当前 打开", bluetooth: "当前 打开", lowPower: "当前 关闭", darkMode: "当前 打开", rotationLock: "当前 关闭", mute: "当前 关闭" }[k]}</small></div><span style="color:var(--ios-green)">可用</span></div>`).join("")}
+      </div>
+      <div class="gfoot">只读取每个开关的当前状态，不会改动任何设置。显示「不可用」的动作在本机系统上找不到对应接口，导出日志时会附上详细信息。</div>
+      <div class="ghead"></div><div class="group"><div class="row tap center" data-act="retest"><div class="lbl" style="color:var(--ios-blue)">重新检测</div></div></div>`,
+  },
+};
+
+const NOTES = {
+  root: { h: "首页 · 规则列表", d: [
+      "顶部总开关：关掉后所有规则停止，正在生效的动作立即恢复。",
+      "「最近执行」一行：不用进日志也能确认插件在工作，排查问题时最需要这个。",
+      "规则行：App 图标 + 名称 + 摘要（App · 条件数 · 动作数），右侧圆点表示启用 / 停用。",
+      "调试区常驻：日志、自检都是一级入口，方便你截图反馈。"],
+    q: ["规则列表要不要按 App 分组（一个 App 一组）？还是现在这样平铺 + 排序？"] },
+  rule: { h: "编辑规则 · 当 / 如果 / 就", d: [
+      "三个分组标题直接写「当」「如果」「就」，和规则模型一一对应。",
+      "只有 2 个以上条件时才出现「全部满足 / 任一满足」，避免一上来就复杂。",
+      "动作右侧的「↩︎ 恢复」徽标：一眼看出哪些动作离开时会还原。",
+      "「立即试一下」：不用真的切 App，就能验证规则判断和动作效果。",
+      "「条件变化时重新判断」默认关闭，放在高级里。"],
+    q: ["规则名称要不要自动生成（如「Telegram · 2 个动作」），用户可以不填？"] },
+  apps: { h: "选择 App", d: [
+      "支持多选，一条规则可以同时作用于多个 App。",
+      "已选的置顶，其余分「用户 App / 系统 App」两组，顶部可搜索。",
+      "每行显示 bundle id，方便你在日志里对照。"],
+    q: ["要不要提供「所有 App」选项（比如所有 App 打开时都关蓝牙）？"] },
+  cond: { h: "编辑条件", d: [
+      "Wi-Fi：「连接的是 / 不是」两种，加「填入当前 Wi-Fi」按钮，免手打。",
+      "时间段：用选择器（15 分钟一档），不手动输入，避免格式错误。",
+      "充电：一个二选一。",
+      "原型里点「＋ 添加条件」可以看到第一版的全部条件类型。"],
+    q: ["第一版还想加哪个条件？候选：电量高于/低于、耳机已连接、专注模式。"] },
+  act: { h: "编辑动作", d: [
+      "数值类（音量、亮度）用滑块；开关类用「打开 / 关闭」二选一。",
+      "「恢复原来的状态」每个动作单独设置，默认打开。",
+      "「立即试一下」会真的执行这个动作，方便调到满意的值。"],
+    q: ["音量要不要区分「媒体音量」和「铃声音量」？"] },
+  log: { h: "运行日志", d: [
+      "按事件记录：打开 / 离开 App、网络变化、每条规则每个条件的判断结果（当前值也写上）。",
+      "绿色 ✓ 满足、橙色 ✗ 不满足，一眼看出为什么没执行。",
+      "右上角「复制」直接粘贴给我排查。"],
+    q: [] },
+  test: { h: "动作自检", d: [
+      "只读检查：读取每个动作的当前状态，能读到就说明本机系统上接口可用。",
+      "不同 iOS 版本私有接口不同，开源后别人反馈问题时先看这一页。"],
+    q: [] },
+};
+
+/* ---------- 底部菜单 ---------- */
+function openSheet(title, items) {
+  $("sheet").innerHTML = `<div class="grp"><div class="t">${title}</div>${items.map((it) =>
+    `<button data-act="${it.act}" data-v="${it.v}" ${it.disabled ? "disabled" : ""}>${it.label}</button>`).join("")}</div>
+    <div class="grp"><button class="cancel" data-act="closeSheet">取消</button></div>`;
+  $("screen").classList.add("open");
+}
+function closeSheet() { $("screen").classList.remove("open"); }
+
+/* ---------- 渲染 ---------- */
+function logo(size) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round">
+    <path d="M10 10 L30 30 M30 10 L10 30"/><circle cx="20" cy="20" r="4.5" fill="#fff" stroke="none"/></svg>`;
+}
+function render() {
+  const st = stack[stack.length - 1], sc = SCREENS[st.s], nav = sc.nav(st);
+  $("nav").innerHTML = `${stack.length > 1 ? `<button class="back" data-act="back">‹ ${nav.back}</button>` : `<button class="back" style="opacity:.9">‹ ${nav.back}</button>`}
+    <div class="title">${esc(nav.title)}</div>${nav.right ? `<button class="right" data-act="copyLog">${nav.right}</button>` : ""}`;
+  const scroll = $("body").scrollTop; const same = render.last === st.s; render.last = st.s;
+  $("body").innerHTML = sc.body(st);
+  if (same) $("body").scrollTop = scroll;
+  $("map").innerHTML = Object.entries(SCREENS).map(([k, v]) => `<button class="${k === st.s ? "on" : ""}" data-jump="${k}">
+    <span class="n">${v.map[0]}</span><span>${v.map[1]}<span class="sub">${v.map[2]}</span></span></button>`).join("");
+  const n = NOTES[st.s];
+  $("notes").innerHTML = `<div class="eyebrow">设计要点</div><h3>${n.h}</h3><ul>${n.d.map((x) => `<li>${x}</li>`).join("")}</ul>
+    ${n.q.length ? `<div class="q"><div class="eyebrow">待你决定</div><ul>${n.q.map((x) => `<li>${x}</li>`).join("")}</ul></div>` : ""}`;
+  $("json").textContent = JSON.stringify(S, null, 2);
+}
+
+/* ---------- 交互 ---------- */
+document.addEventListener("click", (e) => {
+  const j = e.target.closest("[data-jump]"); if (j) return jump(j.dataset.jump);
+  const el = e.target.closest("[data-act]"); if (!el || el.tagName === "INPUT" || el.tagName === "SELECT") return;
+  const st = stack[stack.length - 1], r = st.rid && rule(st.rid), v = el.dataset.v;
+  const A = {
+    back, go: () => go(v, { rid: st.rid }), closeSheet,
+    toggleAll: () => { S.enabled = !S.enabled; toast(S.enabled ? "ControlX 已启用" : "已停用，正在生效的动作已恢复"); },
+    openRule: () => go("rule", { rid: v }),
+    newRule: () => { const id = "r" + Date.now(); S.rules.push({ id, name: "新规则", enabled: true, apps: [], match: "all", reevaluate: false, conditions: [], actions: [] }); go("rule", { rid: id }); },
+    ruleEnabled: () => { r.enabled = !r.enabled; },
+    match: () => { r.match = v; },
+    reeval: () => { r.reevaluate = !r.reevaluate; },
+    openCond: () => go("cond", { rid: st.rid, i: +v }),
+    openAct: () => go("act", { rid: st.rid, i: +v }),
+    addCond: () => openSheet("添加条件", Object.entries(COND).map(([k, c]) => ({ act: "doAddCond", v: k, label: `${c.ic} ${c.name}` }))),
+    doAddCond: () => { r.conditions.push(v === "wifi" ? { type: v, op: "is", ssid: "" } : v === "charging" ? { type: v, is: true } : { type: v, start: "22:00", end: "07:00", days: "everyday" });
+      closeSheet(); go("cond", { rid: st.rid, i: r.conditions.length - 1 }); },
+    addAct: () => openSheet("添加动作", Object.entries(ACT).map(([k, a]) => ({ act: "doAddAct", v: k, label: `${a.ic} ${a.name}`, disabled: r.actions.some((x) => x.type === k) }))),
+    doAddAct: () => { r.actions.push({ type: v, value: ACT[v].kind === "level" ? 50 : true, restore: true }); closeSheet(); go("act", { rid: st.rid, i: r.actions.length - 1 }); },
+    delRule: () => openSheet(`删除「${esc(r.name)}」？`, [{ act: "doDelRule", v: "", label: '<span style="color:var(--ios-red)">删除规则</span>' }]),
+    doDelRule: () => { S.rules = S.rules.filter((x) => x.id !== st.rid); closeSheet(); stack = [{ s: "root" }]; toast("已删除"); },
+    testRule: () => toast(r.apps.length ? `模拟打开 ${app(r.apps[0]).name}：查看运行日志` : "请先选择 App"),
+    pickApp: () => { r.apps = r.apps.includes(v) ? r.apps.filter((x) => x !== v) : [...r.apps, v]; },
+    condOp: () => { r.conditions[st.i].op = v; },
+    fillSsid: () => { r.conditions[st.i].ssid = "Home-5G"; toast("已填入 Home-5G"); },
+    charge: () => { r.conditions[st.i].is = v === "1"; },
+    days: () => { r.conditions[st.i].days = v; },
+    delCond: () => { r.conditions.splice(st.i, 1); back(); toast("已删除条件"); return true; },
+    boolVal: () => { r.actions[st.i].value = v === "1"; },
+    restore: () => { r.actions[st.i].restore = !r.actions[st.i].restore; },
+    preview: () => { const a = r.actions[st.i]; toast(`已执行：${ACT[a.type].name} ${actText(a)}`); },
+    delAct: () => { r.actions.splice(st.i, 1); back(); toast("已删除动作"); return true; },
+    copyLog: () => toast("日志已复制"), clearLog: () => toast("日志已清空"), retest: () => toast("检测完成：8/8 可用"),
+  };
+  if (A[el.dataset.act] && A[el.dataset.act]() !== true) render();
+});
+document.addEventListener("input", (e) => {
+  const el = e.target, st = stack[stack.length - 1], r = st.rid && rule(st.rid);
+  if (el.dataset.act === "ruleName") { r.name = el.value; $("nav").querySelector(".title").textContent = el.value; $("json").textContent = JSON.stringify(S, null, 2); }
+  if (el.dataset.act === "ssid") { r.conditions[st.i].ssid = el.value; $("json").textContent = JSON.stringify(S, null, 2); }
+  if (el.dataset.act === "level") { r.actions[st.i].value = +el.value; el.nextElementSibling.textContent = el.value + "%"; $("json").textContent = JSON.stringify(S, null, 2); }
+  if (el.dataset.act === "search") { st.q = el.value; const pos = el.selectionStart; render(); const n = document.querySelector('[data-act="search"]'); n.focus(); n.setSelectionRange(pos, pos); }
+});
+document.addEventListener("change", (e) => {
+  const el = e.target, st = stack[stack.length - 1];
+  if (el.dataset.act === "time") { rule(st.rid).conditions[st.i][el.dataset.v] = el.value; render(); }
+});
+$("themeBtn").onclick = () => { light = !light; $("screen").classList.toggle("light-phone", light); $("themeBtn").textContent = light ? "切换深色手机" : "切换浅色手机"; };
+$("resetBtn").onclick = () => { S = fresh(); stack = [{ s: "root" }]; closeSheet(); render(); };
+$("copyBtn").onclick = () => { navigator.clipboard.writeText(JSON.stringify(S, null, 2)).then(() => { $("copyBtn").textContent = "已复制 ✓"; setTimeout(() => $("copyBtn").textContent = "复制 JSON", 1200); }); };
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
+render();
+</script>
+</body>
+</html>
