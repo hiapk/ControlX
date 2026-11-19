@@ -131,13 +131,33 @@ static NSNumber *BrightnessGet(void) {
     return @(lround(UIScreen.mainScreen.brightness * 100));
 }
 
+@interface SBBrightnessController : NSObject
++ (instancetype)sharedBrightnessController;
+- (void)setBrightnessLevel:(float)level;
+@end
+
+// 直接 BKSDisplayBrightnessSet 只是「临时亮度」，系统随后会拉回原值；
+// 要么走 SpringBoard 自己的亮度控制器（和控制中心滑块同一路径），
+// 要么包在 BKS 亮度事务里提交，才会被当成用户设置保存下来。
 static BOOL BrightnessSet(NSInteger level, NSString **how) {
     float v = MAX(0, MIN(100, level)) / 100.0f;
+    Class sb = NSClassFromString(@"SBBrightnessController");
+    if ([sb respondsToSelector:@selector(sharedBrightnessController)]) {
+        SBBrightnessController *c = [sb sharedBrightnessController];
+        if ([c respondsToSelector:@selector(setBrightnessLevel:)]) {
+            [c setBrightnessLevel:v];
+            CXHow(how, @"SBBrightnessController");
+            return YES;
+        }
+    }
     CXLoadFramework(@"/System/Library/PrivateFrameworks/BackBoardServices.framework/BackBoardServices");
     void (*set)(float, int) = (void (*)(float, int))dlsym(RTLD_DEFAULT, "BKSDisplayBrightnessSet");
+    CFTypeRef (*begin)(CFAllocatorRef) = (CFTypeRef (*)(CFAllocatorRef))dlsym(RTLD_DEFAULT, "BKSDisplayBrightnessTransactionCreate");
     if (set) {
+        CFTypeRef t = begin ? begin(kCFAllocatorDefault) : NULL;
         set(v, 1);
-        CXHow(how, @"BKSDisplayBrightnessSet");
+        if (t) CFRelease(t);
+        CXHow(how, t ? @"BKSDisplayBrightness 事务" : @"BKSDisplayBrightnessSet（可能被拉回）");
         return YES;
     }
     UIScreen.mainScreen.brightness = v;

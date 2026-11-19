@@ -425,6 +425,7 @@ NSString *CXDiagnose(void) {
         @[ @"SBMediaController", @[ @"shared", @"nowPlaying", @"playing" ] ],
         @[ @"FBSSystemService", @[ @"shared", @"terminate" ] ],
         @[ @"UISUserInterfaceStyleArbiter", @[] ],
+        @[ @"SBBrightnessController", @[] ],
     ];
     NSMutableString *s = [NSMutableString stringWithFormat:@"iOS %@ · %@\n", UIDevice.currentDevice.systemVersion, NSDate.date];
     [s appendString:@"\n【已挂上的钩子】\n"];
